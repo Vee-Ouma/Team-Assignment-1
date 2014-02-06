@@ -78,6 +78,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="db_engine.h" />
+    <ClInclude Include="parser.h" />
+    <ClInclude Include="relation.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="db_engine.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="parser.cpp" />
+    <ClCompile Include="relation.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
