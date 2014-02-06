@@ -39,53 +39,53 @@ struct Relation {
 	
 	/*------------------- Row Operations -------------------*/
 	
-	//Insert values into a row of a table
+	//Insert values into a row of a table TODO
 	void insert_row(vector<string> value_list);
 	
-	//Delete rows where attribute satisfies condition
+	//Delete rows where attribute satisfies condition TODO
 	void delete_row(vector<string> attr_list, vector<string> cond_list);
 	
 	/*----------------- Column Operations ------------------*/
 
-    //Insert values into a column of a table
+    //Insert values into a column of a table TODO
     void insert_column(vector<string> value_list);
 		
-	//Select values in columns that satisfy conditions 
+	//Select values in columns that satisfy conditions TODO
 	vector<string> select_column(vector<string> attr_list, vector<string> cond_list);
 	
-	//Update values in columns that satisfy conditions
+	//Update values in columns that satisfy conditions TODO
 	void update_column(vector<string> attr_list, vector<string> cond_list);
 	
 	/*----------------- Relation Operations ----------------*/
 	
 	//Returns true if two relations are union compatible
-	bool union_compatible(Relation table);
+	bool union_compatible(Relation table); //Alex
 
 	//Return new relation with renamed attributes
-	Relation renaming(vector<string> attr_list);
+	Relation renaming(vector<string> attr_list); //Jordan
 
 	//Return new relation that contains speficied attribute columns
-	Relation projection(vector<string> attr_list);
+	Relation projection(vector<string> attr_list); //Jordan
 
 	//Return new relation that satisfies conditions
-	Relation selection(vector<string> attr_list, vector<string> cond_list);
+	Relation selection(vector<string> attr_list, vector<string> cond_list); //Jordan
 
 	//Return new relation which is the union of two relations
-	Relation set_union(Relation table);
+	Relation set_union(Relation table); //Zach
 
 	//Return new relation which is the difference of two relations
-	Relation set_difference(Relation table);
+	Relation set_difference(Relation table); //Zach
 
 	//Return new relation which is the cross product of two relations
-	Relation cross_product(Relation table);
+	Relation cross_product(Relation table); //Ian
 
 	//Return new relation which is the natural join of two relations
-	Relation natural_join(Relation table);
+	Relation natural_join(Relation table); //Ian
 
 	/*------------------ Print Operations ------------------*/
 
 	//Display relation to console 
-	void show();
+	void show(); //Jordan
 	
 };
 
