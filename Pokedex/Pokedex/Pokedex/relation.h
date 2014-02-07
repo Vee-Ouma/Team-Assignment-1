@@ -20,10 +20,11 @@ struct Relation {
 	string name;          //Name of relation
 	vector<int> key_pos; //Contains position of columns used as keys
 	
+	vector<string> attr_names;	//Name of the attributes
+	vector<string> attr_types; 	//Data type of the attributes
+	
 	vector<vector<string>> table; //2-Dimensional table of strings
-	                             //1st row: attribute name
-							    //2nd row: data type of attribute
-
+	
 	Relation() //Default relation constructor
 	{
 		name = "";
