@@ -78,7 +78,7 @@ struct Relation {
 	Relation set_difference(Relation table); //Zach
 
 	//Return new relation which is the cross product of two relations
-	Relation cross_product(Relation table); //Ian
+	Relation cross_product(string new_table_name, Relation table); //Ian
 
 	//Return new relation which is the natural join of two relations
 	Relation natural_join(Relation table); //Ian
