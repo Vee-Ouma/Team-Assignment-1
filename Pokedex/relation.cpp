@@ -3,8 +3,30 @@ declared in relation.h*/
 
 #include "relation.h"
 
-Relation Relation::natural_join(Relation table)
+Relation Relation::natural_join(string new_table_name, Relation other_table)
 {
+	vector<string> new_attr_names;
+	vector<string> new_attr_types;
+	vector<int> new_key_pos;
+	string repeat = " ";
+	int repeat_pos = -1;
+
+	for (int i = 0; i < attr_names.size(); i++)
+	{
+		for (int j = 0; j < other_table.attr_names.size(); j++)
+		{
+			if ((attr_names[i].compare(other_table.attr_names[j]) == 0))
+			{
+				repeat = attr_names[i];
+				repeat_pos = j;
+				break;
+			}
+		}
+		if (repeat_pos != -1)
+			break;
+	}
+
+	
 	
 }
 
@@ -14,7 +36,7 @@ Relation Relation::cross_product(string new_table_name, Relation other_table)
 	vector<string> new_attr_types;
 	vector<int> new_key_pos;
 
-	//Get key positions from the two tables being worked on and put them all into vector new_key_pos
+	//Get key positions from the two tables being worked on and put them all into vector new_key_pos TODO
 	new_key_pos = key_pos;
 	new_key_pos.insert(new_key_pos.end(), other_table.key_pos.begin(), other_table.key_pos.end());
 

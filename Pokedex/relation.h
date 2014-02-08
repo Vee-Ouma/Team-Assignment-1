@@ -81,7 +81,7 @@ struct Relation {
 	Relation cross_product(string new_table_name, Relation table); //Ian
 
 	//Return new relation which is the natural join of two relations
-	Relation natural_join(Relation table); //Ian
+	Relation natural_join(string new_table_name, Relation table); //Ian
 
 	/*------------------ Print Operations ------------------*/
 
