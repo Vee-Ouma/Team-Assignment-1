@@ -37,7 +37,24 @@ struct Relation {
 		table.push_back(_attr);
 		table.push_back(_attr_type);
 	}
+
+	/*------------------ Helper Functions ------------------*/
+
+	//Return name of Relation
+	string get_name()
+	{
+		return name;
+	}
+
+	//Set name of Relation
+	void set_name(string new_name)
+	{
+		name = new_name;
+	}
 	
+	//Return true if attribute's value satisfies condition
+	bool test_condition(vector<string> attr_list, vector<string> cond_list);
+
 	/*------------------- Row Operations -------------------*/
 	
 	//Insert values into a row of a table TODO
@@ -63,7 +80,7 @@ struct Relation {
 	bool union_compatible(Relation table); //Alex
 
 	//Return new relation with renamed attributes
-	Relation renaming(vector<string> attr_list); //Jordan
+	void renaming(vector<string> attr_list); //Jordan
 
 	//Return new relation that contains speficied attribute columns
 	Relation projection(vector<string> attr_list); //Jordan
@@ -89,8 +106,3 @@ struct Relation {
 	void show(); //Jordan
 	
 };
-
-    /*------------------ Helper Functions ------------------*/
-
-//Return true if attribute's value satisfies condition
-bool test_condition(vector<string> attr_list, vector<string> cond_list);
