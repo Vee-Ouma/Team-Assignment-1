@@ -10,13 +10,9 @@ Any functions that are passed vector<string> cond_list will need to call
 this function.*/
 
 #pragma once
-
-#include <vector>
-#include <string>
+#include "condition.h"
 #include <iostream>
 #include <iomanip>
-
-using namespace std;
 
 struct Relation {
 	string name;          //Name of relation
@@ -104,6 +100,11 @@ struct Relation {
 
 	//Display relation to console 
 	void show(); //Jordan
+
+	/*------------------ Operator Overloaders ------------------*/
+
+	//Assignment operator overloaded for Relation class objects
+	Relation& operator=(const Relation& orig);
 
 };
 
