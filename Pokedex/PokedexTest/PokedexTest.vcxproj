@@ -92,11 +92,6 @@
     </ClCompile>
     <ClCompile Include="unittest1.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Pokedex\Pokedex\Pokedex.vcxproj">
-      <Project>{a0f93bba-475d-44f1-ab80-c47a01c9deac}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

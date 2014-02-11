@@ -10,8 +10,16 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Pokedex\Pokedex.vcxproj">
+      <Project>{3818fa4c-3af6-4feb-b782-aeafb8a710c0}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BD49CD50-B3EA-473F-8609-F2837E8E2F67}</ProjectGuid>
+    <ProjectGuid>{02C8A6F2-04AC-477A-98F7-531067123878}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>PokedexMain</RootNamespace>
   </PropertyGroup>
@@ -41,6 +49,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>H:\CSCE315\Database\Team-Assignment-1\Pokedex\PokedexMain\Pokedex;$(IncludePath)</IncludePath>
+    <LibraryPath>H:\CSCE315\Database\Team-Assignment-1\Pokedex\PokedexMain\Pokedex\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -77,14 +87,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Pokedex\Pokedex\Pokedex.vcxproj">
-      <Project>{a0f93bba-475d-44f1-ab80-c47a01c9deac}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

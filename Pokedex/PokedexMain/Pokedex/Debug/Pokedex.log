@@ -1,0 +1,36 @@
+﻿Build started 2/10/2014 7:20:05 PM.
+     1>Project "H:\CSCE315\Database\Team-Assignment-1\Pokedex\PokedexMain\Pokedex\Pokedex.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt relation.cpp
+         relation.cpp
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(21): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(39): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(41): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(70): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(83): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(95): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(100): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(110): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(115): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(150): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(153): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(164): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(167): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(195): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(198): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(222): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(228): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(231): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(136): warning C4715: 'Relation::renaming' : not all control paths return a value
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(185): warning C4715: 'Relation::set_union' : not all control paths return a value
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\relation.cpp(216): warning C4715: 'Relation::set_difference' : not all control paths return a value
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"H:\CSCE315\Pokedex\PokedexMain\Debug\Pokedex.lib" /NOLOGO Debug\db_engine.obj
+         Debug\parser.obj
+         Debug\relation.obj
+         Pokedex.vcxproj -> H:\CSCE315\Pokedex\PokedexMain\Debug\Pokedex.lib
+     1>Done Building Project "H:\CSCE315\Database\Team-Assignment-1\Pokedex\PokedexMain\Pokedex\Pokedex.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.73

@@ -4,6 +4,10 @@ development.*/
 
 #include "parser.h"
 #include <iostream>
+#include <vector>
+#include "relation.h"
+
+using namespace std;
 
 int main () 
 {
