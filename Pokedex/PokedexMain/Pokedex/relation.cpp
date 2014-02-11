@@ -139,6 +139,22 @@ bool Relation::union_compatible(Relation table)
 		return false;
 }
 
+void Relation::delete_from(Conjunction c)
+{
+	c.delete_comparisons(this);
+}
+
+void Relation::update(Conjunction c, string value)
+{
+	c.update_comparisons(value, this);
+}
+
+Relation Relation::selection(Conjunction c)
+{
+	return *((Relation*)(c.match_comparisons(this)));
+}
+
+
 Relation Relation::renaming(string new_table_name, vector<string> attr_list)
 {
 	Relation rename_table = Relation(new_table_name, attr_list, attr_types, key_pos);
@@ -369,6 +385,12 @@ Relation Relation::natural_join(string new_table_name, Relation other_table)
 		//Add names and types of attributes from the second table to the new table's names and types vectors
 		vector<string> temp_names = other_table.attr_names;
 		vector<string> temp_types = other_table.attr_types;
+
+		//If both relations cannot join, return an empty Relation
+		if (repeat_pos == -1)
+		{
+			return Relation();
+		}
 
 		temp_names.erase(temp_names.begin() + repeat_pos);
 		temp_types.erase(temp_types.begin() + repeat_pos);

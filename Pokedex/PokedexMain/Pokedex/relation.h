@@ -10,9 +10,29 @@ Any functions that are passed vector<string> cond_list will need to call
 this function.*/
 
 #pragma once
+
 #include "condition.h"
 #include <iostream>
 #include <iomanip>
+#include <vector>
+#include <string>
+#include <tuple>
+
+using namespace std;
+
+
+struct Conjunction {
+	//0: attribute name; 1: type; 2: op ; 3: value
+	typedef vector< tuple<string, string, string, string> > Conj_Type;
+
+	Conj_Type comparisons;
+	Conjunction() {} //Default relation constructor
+
+	void insert_conj(string attr_name, string attr_type, string op, string value);
+	void* match_comparisons(void* table);
+	void delete_comparisons(void* table);
+	void update_comparisons(string value, void* table);
+};
 
 struct Relation {
 	string name;          //Name of relation
@@ -26,6 +46,7 @@ struct Relation {
 	Relation() //Default relation constructor
 	{
 		name = "";
+
 	}
 
 	Relation(string _name)
@@ -44,62 +65,67 @@ struct Relation {
 	/*------------------- Row Operations -------------------*/
 
 	//Insert values into a row of a table 
-	void insert_row(vector<string> value_list); //Alex
+	void insert_row(vector<string> value_list);
 
 	//Delete rows where attribute satisfies condition 
 	//key_list contains the keys to the row that is going to be deleted
-	void delete_row(vector<string> key_list); //Alex 
+	void delete_row(vector<string> key_list);
 
 	/*----------------- Column Operations ------------------*/
 
 	//Insert values into a column of a table 
-	void insert_column(vector<string> value_list, string name, string type); //Alex
+	void insert_column(vector<string> value_list, string name, string type);
 
 	//Insert values into a column of a table 
 	//attr_list has name first, then type second
 	//cond_list is the row that's going to be deleted
-	void delete_column(vector<string> value_list, string name, string type); //Alex
+	void delete_column(vector<string> value_list, string name, string type);
 
 	//Select values in columns that satisfy conditions 
 	//cond_list contains name and then type
-	vector<string> select_column(vector<string> cond_list); //Alex
+	vector<string> select_column(vector<string> cond_list);
 
 	//Update values in columns that satisfy conditions 
 	//cond_list contains name and then type
-	void update_column(vector<string> attr_list, vector<string> cond_list); //Alex
+	void update_column(vector<string> attr_list, vector<string> cond_list);
 
 	/*----------------- Relation Operations ----------------*/
 
 	//Returns true if two relations are union compatible
-	bool union_compatible(Relation table); //Alex
+	bool union_compatible(Relation table);
 
-	//Relation test_conditions(Condition table);
+	//Delete rows from relation that do not satisfy conditions
+	void delete_from(Conjunction c);
+
+	//Update values in relation that satisfy the conditions
+	void update(Conjunction c, string value);
 
 	//Return new relation with renamed attributes
-	Relation renaming(string new_table_name, vector<string> attr_list); //Jordan
+	Relation renaming(string new_table_name, vector<string> attr_list);
 
 	//Return new relation that contains specified attribute columns
-	Relation projection(string new_table_name, vector<string> attr_list); //Jordan
+	Relation projection(string new_table_name, vector<string> attr_list);
 
 	//Return new relation that satisfies conditions
-	Relation selection(string new_table_name, vector<string> attr_list, vector<string> cond_list); //Jordan
+	//Relation selection(string new_table_name, vector<string> attr_list, vector<string> cond_list);
+	Relation selection(Conjunction c);
 
 	//Return new relation which is the union of two relations
-	Relation set_union(string new_table_name, Relation other_table); //Zach
+	Relation set_union(string new_table_name, Relation other_table);
 
 	//Return new relation which is the difference of two relations
-	Relation set_difference(string new_table_name, Relation other_table); //Zach
+	Relation set_difference(string new_table_name, Relation other_table); 
 
 	//Return new relation which is the cross product of two relations
-	Relation cross_product(string new_table_name, Relation other_table); //Ian
+	Relation cross_product(string new_table_name, Relation other_table);
 
 	//Return new relation which is the natural join of two relations
-	Relation natural_join(string new_table_name, Relation other_table); //Ian
+	Relation natural_join(string new_table_name, Relation other_table);
 
 	/*------------------ Print Operations ------------------*/
 
 	//Display relation to console 
-	void show(); //Jordan
+	void show();
 
 	/*------------------ Operator Overloaders ------------------*/
 
@@ -109,11 +135,11 @@ struct Relation {
 };
 
     /*------------------ Helper Functions ------------------*/
-bool is_integer(const string& s); //Zach
+bool is_integer(const string& s);
 
-bool operator ==(vector<string> a, vector<string> b); //Alex
+bool operator ==(vector<string> a, vector<string> b);
 
-bool check_row(vector<string> vec, vector<string> keys); //Alex
+bool check_row(vector<string> vec, vector<string> keys);
 
 //Return true if attribute's value satisfies condition
 bool test_condition(vector<string> attr_list, vector<string> cond_list);

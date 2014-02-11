@@ -27,6 +27,9 @@
     <ClCompile Include="relation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="condition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="db_engine.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="relation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="condition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

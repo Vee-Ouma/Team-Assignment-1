@@ -76,11 +76,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="condition.cpp" />
     <ClCompile Include="db_engine.cpp" />
     <ClCompile Include="parser.cpp" />
     <ClCompile Include="relation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="condition.h" />
     <ClInclude Include="db_engine.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="relation.h" />

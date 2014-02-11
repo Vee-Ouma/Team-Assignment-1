@@ -553,7 +553,71 @@ namespace PokedexTest
 
 			Relation r3 = r.natural_join("New Starcraft", r2);
 
-			Assert::IsTrue(r3.table.size() != 0);
+			Assert::IsTrue(r3.table.size() == 0); //empty table
+
+			Relation r4;
+			vector<string> colr4, col2r4, col3r4, rowr4, row2r4, attrr4;
+
+			colr4.push_back("Zergling");
+			colr4.push_back("Infestor");
+			colr4.push_back("Mutalisk");
+
+			col2r4.push_back("Ghost");
+			col2r4.push_back("Thor");
+			col2r4.push_back("Medic");
+
+			col3r4.push_back("Zealot");
+			col3r4.push_back("Carrier");
+			col3r4.push_back("Observer");
+
+			r4.insert_column(colr2, "Zerg", "string");
+			r4.insert_column(col2r2, "Terra1", "string");
+			r4.insert_column(col3r2, "Protoss1", "string");
+
+			Relation r5 = r.natural_join("New Starcraft", r4);
+
+			Assert::IsTrue(r5.table.size() != 0);
+			Assert::IsTrue(r5.table[0][0] == "Zergling");
+			Assert::IsTrue(r5.table[0][1] == "Marine");
+			Assert::IsTrue(r5.table[0][2] == "Archon");
+			Assert::IsTrue(r5.table[0][3] == "Ghost");
+			Assert::IsTrue(r5.table[0][4] == "Zealot");
+
+			Assert::IsTrue(r5.table[1][0] == "Hydralisk");
+			Assert::IsTrue(r5.table[1][1] == "Firebat");
+			Assert::IsTrue(r5.table[1][2] == "Dark Archon");
+			Assert::IsTrue(r5.table[1][3] == "Thor");
+			Assert::IsTrue(r5.table[1][4] == "Carrier");
+
+			Assert::IsTrue(r5.table[2][0] == "Mutalisk");
+			Assert::IsTrue(r5.table[2][1] == "Siege Tank");
+			Assert::IsTrue(r5.table[2][2] == "Immortal");
+			Assert::IsTrue(r5.table[2][3] == "Medic");
+			Assert::IsTrue(r5.table[2][4] == "Observer");
+		}
+
+		TEST_METHOD(ShowTest) //checks if show crashes
+		{
+			Relation r;
+			vector<string> col, col2, col3, row, row2, attr;
+
+			col.push_back("Zergling");
+			col.push_back("Hydralisk");
+			col.push_back("Mutalisk");
+
+			col2.push_back("Marine");
+			col2.push_back("Firebat");
+			col2.push_back("Siege Tank");
+
+			col3.push_back("Archon");
+			col3.push_back("Dark Archon");
+			col3.push_back("Immortal");
+
+			r.insert_column(col, "Zerg", "string");
+			r.insert_column(col2, "Terran", "string");
+			r.insert_column(col3, "Protoss", "string");
+
+			r.show();
 		}
 	};
 }
