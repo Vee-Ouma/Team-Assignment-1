@@ -3,7 +3,7 @@ declared in relation.h*/
 
 #include "relation.h"
 
-bool is_integer(const string& s)
+bool is_integer(const string& s) //s is an integer and Is_integer tests if it is an integer
 {
 	if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
 

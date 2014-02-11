@@ -109,6 +109,7 @@ struct Relation {
 };
 
     /*------------------ Helper Functions ------------------*/
+bool is_integer(const string& s); //Zach
 
 bool operator ==(vector<string> a, vector<string> b); //Alex
 
