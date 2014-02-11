@@ -422,14 +422,14 @@ namespace PokedexTest
 			vector<string> colr2, col2r2, col3r2, rowr2, row2r2, attrr2;
 
 			colr2.push_back("Zergling");
-			colr2.push_back("Overlord");
+			colr2.push_back("Hydralisk");
 			colr2.push_back("Queen");
 
-			col2r2.push_back("Ghost");
+			col2r2.push_back("Marine");
 			col2r2.push_back("Thor");
 			col2r2.push_back("Medic");
 
-			col3r2.push_back("Zealot");
+			col3r2.push_back("Archon");
 			col3r2.push_back("Carrier");
 			col3r2.push_back("Observer");
 
@@ -442,28 +442,118 @@ namespace PokedexTest
 			//Assert::IsTrue(r3.table[0][0] == "Zergling");
 			Assert::IsTrue(r3.table[0][0] == "Hydralisk");
 			Assert::IsTrue(r3.table[1][0] == "Mutalisk");
-			Assert::IsTrue(r3.table[0][1] == "Marine");
-			Assert::IsTrue(r3.table[1][1] == "Firebat");
-			Assert::IsTrue(r3.table[2][1] == "Siege Tank");
-			Assert::IsTrue(r3.table[0][2] == "Archon");
-			Assert::IsTrue(r3.table[1][2] == "Dark Archon");
-			Assert::IsTrue(r3.table[2][2] == "Immortal");
+			//Assert::IsTrue(r3.table[0][1] == "Marine");
+			Assert::IsTrue(r3.table[0][1] == "Firebat");
+			Assert::IsTrue(r3.table[1][1] == "Siege Tank");
+			//Assert::IsTrue(r3.table[0][2] == "Archon");
+			Assert::IsTrue(r3.table[0][2] == "Dark Archon");
+			Assert::IsTrue(r3.table[1][2] == "Immortal");
 
-			/*Assert::IsTrue(r3.table[3][0] == "Larva");
-			Assert::IsTrue(r3.table[4][0] == "Overlord");
-			Assert::IsTrue(r3.table[5][0] == "Queen");
-			Assert::IsTrue(r3.table[3][1] == "Ghost");
-			Assert::IsTrue(r3.table[4][1] == "Thor");
-			Assert::IsTrue(r3.table[5][1] == "Medic");
-			Assert::IsTrue(r3.table[3][2] == "Zealot");
-			Assert::IsTrue(r3.table[4][2] == "Carrier");
-			Assert::IsTrue(r3.table[5][2] == "Observer");
-			*/
+
 		}
 
 		TEST_METHOD(CrossProductTest)
 		{
+			Relation r;
+			vector<string> col, col2, col3, row, row2, attr;
 
+			col.push_back("Zergling");
+			col.push_back("Hydralisk");
+			col.push_back("Mutalisk");
+
+			col2.push_back("Marine");
+			col2.push_back("Firebat");
+			col2.push_back("Siege Tank");
+
+			col3.push_back("Archon");
+			col3.push_back("Dark Archon");
+			col3.push_back("Immortal");
+
+			r.insert_column(col, "Zerg", "string");
+			r.insert_column(col2, "Terran", "string");
+			r.insert_column(col3, "Protoss", "string");
+
+			Relation r2;
+			vector<string> colr2, col2r2, col3r2, rowr2, row2r2, attrr2;
+
+			colr2.push_back("Larva");
+			colr2.push_back("Overlord");
+			colr2.push_back("Queen");
+
+			col2r2.push_back("Ghost");
+			col2r2.push_back("Thor");
+			col2r2.push_back("Medic");
+
+			col3r2.push_back("Zealot");
+			col3r2.push_back("Carrier");
+			col3r2.push_back("Observer");
+
+			r2.insert_column(colr2, "Zerg1", "string");
+			r2.insert_column(col2r2, "Terran1", "string");
+			r2.insert_column(col3r2, "Protoss1", "string");
+
+			Relation r3 = r.cross_product("New Starcraft", r2);
+
+			Assert::IsTrue(r3.table[0][0] == "Zergling");
+			Assert::IsTrue(r3.table[0][1] == "Marine");
+			Assert::IsTrue(r3.table[0][2] == "Archon");
+			Assert::IsTrue(r3.table[0][3] == "Larva");
+			Assert::IsTrue(r3.table[0][4] == "Ghost");
+			Assert::IsTrue(r3.table[0][5] == "Zealot");
+
+			Assert::IsTrue(r3.table[3][0] == "Hydralisk");
+			Assert::IsTrue(r3.table[3][1] == "Firebat");
+			Assert::IsTrue(r3.table[3][2] == "Dark Archon");
+			Assert::IsTrue(r3.table[3][3] == "Larva");
+			Assert::IsTrue(r3.table[3][4] == "Ghost");
+			Assert::IsTrue(r3.table[3][5] == "Zealot");	
+		}
+		TEST_METHOD(NaturalJoinTest)
+		{
+			Relation r;
+			vector<string> col, col2, col3, row, row2, attr;
+
+			col.push_back("Zergling");
+			col.push_back("Hydralisk");
+			col.push_back("Mutalisk");
+
+			col2.push_back("Marine");
+			col2.push_back("Firebat");
+			col2.push_back("Siege Tank");
+
+			col3.push_back("Archon");
+			col3.push_back("Dark Archon");
+			col3.push_back("Immortal");
+
+			r.insert_column(col, "Zerg", "string");
+			r.insert_column(col2, "Terran", "string");
+			r.insert_column(col3, "Protoss", "string");
+
+			Relation r2;
+			vector<string> colr2, col2r2, col3r2, rowr2, row2r2, attrr2;
+
+			colr2.push_back("Zergling");
+			colr2.push_back("Hydralisk");
+			colr2.push_back("Mutalisk");
+			//colr2.push_back("Larva");
+			//colr2.push_back("Overlord");
+			//colr2.push_back("Queen");
+
+			col2r2.push_back("Ghost");
+			col2r2.push_back("Thor");
+			col2r2.push_back("Medic");
+
+			col3r2.push_back("Zealot");
+			col3r2.push_back("Carrier");
+			col3r2.push_back("Observer");
+
+			r2.insert_column(colr2, "Zerg1", "string");
+			r2.insert_column(col2r2, "Terran1", "string");
+			r2.insert_column(col3r2, "Protoss1", "string");
+
+			Relation r3 = r.natural_join("New Starcraft", r2);
+
+			Assert::IsTrue(r3.table.size() != 0);
 		}
 	};
 }
