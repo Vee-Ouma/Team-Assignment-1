@@ -29,6 +29,9 @@ struct DB_Engine {
 
 	//Insert values into row of table
 	void insert_into(string table_name, vector<string> values);
+	
+	//Delete a table from the vector of tables
+	void drop_table(string table_name);
 
 	//To be continued...
 };
