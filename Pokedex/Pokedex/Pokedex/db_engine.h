@@ -8,7 +8,7 @@ the tables vector.*/
 #include "relation.h"
 
 struct DB_Engine {
-	string name;               //Name of database engine
+	string name;              //Name of database engine
 	vector<Relation> tables; //Contains all saved relations
 	
 	DB_Engine() //Default db_engine contructor
@@ -18,21 +18,20 @@ struct DB_Engine {
 	
 	DB_Engine(string _name) 
 	{
-		name = _name; //TODO: is name necessary?
+		name = _name; 
 	}
 	
 	//Return index of table in tables vector
 	int get_table_pos(string table_name);
 
 	//Call relation constructor and add it to vector of relations 	
-	void create_table(string table_name, vector<string> attr_list, vector<string> attr_type, vector<int> key_pos);
+	void create_table(string table_name, vector<string> attr_list, vector<string> attr_type, vector<int> key_pos); 
 
-	//Insert values into row of table
-	void insert_into(string table_name, vector<string> values);
-	
-	//Delete a table from the vector of tables
+	//Remove table from tables vector
 	void drop_table(string table_name);
 
-	//To be continued...
+	//Insert values into row of table
+	void insert_into(string table_name, vector<string> value_list);
+
 };
 

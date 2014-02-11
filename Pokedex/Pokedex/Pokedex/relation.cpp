@@ -2,124 +2,213 @@
 declared in relation.h*/
 
 #include "relation.h"
-#include <string>
-#include <vector>
-#include <iostream>
-#include <iomanip>
 
-using namespace std;
-
-<<<<<<< HEAD
-/*------------------- Row Operations -------------------*/
-	
-	//Insert values into a row of a table
-	void insert_row(vector<string> value_list)
-	{
-=======
-bool Relation::test_condition(vector<string> attr_list, vector<string> cond_list)
+bool is_integer(const string& s)
 {
+	if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
 
+	char * p;
+	strtol(s.c_str(), &p, 10);
+
+	return (*p == 0);
+}
+
+bool operator ==(vector<string> a, vector<string> b)
+{
+	bool verdict = true;
+	if (a.size() == b.size())
+	{
+		for (int i = 0; i < a.size(); i++)
+		{
+			if (a[i] != b[i])
+				verdict = false;
+		}
+		if (verdict)
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool check_row(vector<string> vec, vector<string> keys)
+{
+	bool check = false;
+
+	for (int i = 0; i < keys.size(); i++)
+	{
+		for (int j = 0; j < vec.size(); j++)
+		{
+			if (keys[i] == vec[j])
+			{
+				check = true;
+				break;
+			}
+		}
+		if (!check)
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 void Relation::insert_row(vector<string> value_list)
 {
-
+	table.push_back(value_list);
 }
 
-void Relation::delete_row(vector<string> attr_list, vector<string> cond_list)
+void Relation::delete_row(vector<string> key_list)
 {
-
+	for (int i = 0; i < table.size(); i++)
+	{
+		if (check_row(table[i], key_list))
+		{
+			table.erase(table.begin() + i);
+			break;
+		}
+	}
 }
 
-void Relation::insert_column(vector<string> value_list)
+void Relation::insert_column(vector<string> value_list, string name, string type)
 {
-
+	for (int i = 0; i < table.size(); i++)
+	{
+		table[i].push_back(value_list[i]); 
+	}
+	attr_names.push_back(name);
+	attr_types.push_back(type);
 }
 
-vector<string> Relation::select_column(vector<string> attr_list, vector<string> cond_list)
+vector<string> Relation::select_column(vector<string> cond_list)
 {
-
+	vector<string> column;
+	int i = 0;
+	for (i; i < attr_names.size(); i++)
+	{
+		if ((cond_list[0] == attr_names[i]) && (cond_list[1] == attr_types[i]))
+			break;
+	}
+	for (int j = 0; j < table.size(); j++)
+	{
+		column.push_back(table[j][i]);
+	}
+	return column;
 }
 
-void Relation::update_column(vector<string> attr_list, vector<string> cond_list)
+void Relation::update_column(vector<string> value_list, vector<string> cond_list)
 {
-
+	int i = 0;
+	for (i; i < attr_names.size(); i++)
+	{
+		if ((cond_list[0] == attr_names[i]) && (cond_list[1] == attr_types[i]))
+			break;
+	}
+	for (int j = 0; j < table.size(); j++)
+	{
+		table[j][i] = value_list[j];
+	}
 }
 
 bool Relation::union_compatible(Relation table)
 {
-
+	if ((attr_names == table.attr_names) && (attr_types == table.attr_types))
+		return true;
+	else
+		return false;
 }
 
-//Done... I think
-void Relation::renaming(vector<string> attr_list)
+Relation Relation::renaming(string new_table_name, vector<string> attr_list)
 {
-	for (int i = 0; i < attr_list.size(); i++)  //iterate through attr_list passed to the function
+	if (attr_names.size() == attr_list.size())
 	{
-		if (attr_list.at(i) != "NULL")  //if the string in the attr_list is a new name
-		{
-			attr_names.at(i) = attr_list.at(i);  //change the name of the attribute of the relation to the new name
-		}
+		attr_names = attr_list;
+		return (*this);
 	}
 }
 
-//Done... I think
-Relation Relation::projection(vector<string> attr_list)
+Relation Relation::set_union(string new_table_name, Relation other_table)
 {
-	string new_name = name;  //new_name is the same name as the relation being projected upon
-	Relation* temp = new Relation;  
-	(*temp).set_name(new_name);  //new relation's name is set to new_name
-	vector<string> new_column;
-	for (int i = 0; i < attr_list.size(); i++)  //iterate through attr_list passed to the function
+	//Check if relations are union compatible
+	if ((*this).union_compatible(other_table))
 	{
-		for (int j = 0; j < attr_names.size(); j++)  //iterate through the names of the attributes of the relation being projected upon
-		//can get rid of this if attr_list has same length as attr_names
+		//Create new relation to be returned at end of function;
+		Relation union_table("", attr_names, attr_types, key_pos);
+
+		//Contains index of duplicate rows
+		vector<int> duplicate_row;
+
+		//Insert all rows from first table into new relation
+		for (int i = 0; i < table.size(); i++)
 		{
-			if (attr_list.at(i) == attr_names.at(j))  //if the name on the attr_list matches the name in attr_names
+			union_table.insert_row(table[i]);
+			for (int j = 0; j < other_table.table.size(); j++)
 			{
-				for (int k = 0; k < table.size(); k++) //iterate through the rows of the table
+				//Store index of duplciate rows found in other table
+				if (table[i] == other_table.table[j])
 				{
-					new_column.push_back(table[k][j]);  //add value on row k, column j, to the new column
+					duplicate_row.push_back(j);
 				}
-				(*temp).insert_column(new_column);  //add new column to new Relation
-				((*temp).attr_names).push_back(attr_names.at(j));  //add name of new attribute to new Relation
-				((*temp).attr_types).push_back(attr_types.at(j));  //add type of new attribute to new Relation
 			}
 		}
+
+		//Insert non-duplicate rows from other table into new relation 
+		for (int i = 0; i < other_table.table.size(); i++)
+		{
+			bool insert = true;
+			for (int j = 0; j < duplicate_row.size(); j++)
+			{
+				if (i == duplicate_row[j])
+				{
+					insert = false;
+					break;
+				}
+			}
+
+			if (insert)
+			{
+				union_table.insert_row(other_table.table[i]);
+			}
+		}
+
+		//Return new relation created from union
+		return union_table;
 	}
-	return *temp;
 }
 
-Relation Relation::selection(vector<string> attr_list, vector<string> cond_list)
+Relation Relation::set_difference(string new_table_name, Relation other_table)
 {
-	string new_name = name;  //new_name is the same name as the relation being selected from
-	Relation* temp = new Relation;
-	(*temp).set_name(new_name);  //new relation's name is set to new_name
+	//Check if relations are union compatible
+	if ((*this).union_compatible(other_table))
+	{
+		//Create new relation to be returned at end of function;
+		Relation diff_table("", attr_names, attr_types, key_pos);
 
-	return *temp;
+		for (int i = 0; i < table.size(); i++) 
+		{
+			bool insert = true;
+			for (int j = 0; j < other_table.table.size(); j++)
+			{
+				if (table[i] == other_table.table[j])
+				{
+					insert = false;
+					break;
+				}
+			}
+
+			if (insert)
+			{
+				diff_table.insert_row(table[i]);
+			}
+		}
+
+		//Return new relation created from difference
+		return diff_table;
+	}
 }
 
-Relation Relation::set_union(Relation table)
-{
 
-}
-
-Relation Relation::set_difference(Relation table)
-{
-
-}
-
-Relation Relation::cross_product(Relation table)
-{
-
-}
-
-Relation Relation::natural_join(Relation table)
-{
-
-}
-
-//Done... I think
 void Relation::show()
 {
 	cout << name << "\n";
@@ -128,23 +217,17 @@ void Relation::show()
 		cout << setw(10) << left << attr_names.at(i);
 	}
 	cout << "\n";
-	for (int i = 0; i < table.size(); i++)  //iterate through the rows of the table
+	//Iterate through the rows of the table
+	for (int i = 0; i < table.size(); i++)  
 	{
-		for (int j = 0; j < (table.at(i)).size(); j++)  //iterate through the row
+		//Iterate through the row
+		for (int j = 0; j < (table.at(i)).size(); j++)  
 		{
 			cout << setw(10) << left << (table.at(i)).at(j);
 		}
 		cout << "\n";
 	}
+
 }
->>>>>>> f1937bc5a1baeba2129ec58055f13b532948f70c
 
-	}
-	
-	//Delete rows where attribute satisfies condition
-	void delete_row(vector<string> attr_list, vector<string> cond_list)
-	{
-
-	}
-/*-------------------End Row Operations ----------------*/	
  
