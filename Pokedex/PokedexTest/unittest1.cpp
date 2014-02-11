@@ -12,6 +12,11 @@ namespace PokedexTest
 	TEST_CLASS(TestRelationFile)
 	{
 	public:
+		TEST_METHOD(IsIntegerTest)
+		{
+			Assert::IsTrue(is_integer("64"));
+			Assert::IsTrue(!is_integer("A3"));
+		}
 		
 		TEST_METHOD(TestIsEqualsStringVectorOperator)
 		{
@@ -46,6 +51,290 @@ namespace PokedexTest
 			Assert::IsTrue(!test);
 
 		}
+		TEST_METHOD(CheckRowTest)
+		{
+			vector<string> keys;
+			keys.push_back("Hydralisk");
+			keys.push_back("Zergling");
+			//keys.push_back("Hydralisk");
 
+			vector<string> zerg;
+			zerg.push_back("Zergling");
+			zerg.push_back("Ultralisk");
+			zerg.push_back("Roach");
+			zerg.push_back("Baneling");
+			zerg.push_back("Hydralisk");
+
+			Assert::IsTrue(check_row(zerg, keys));
+
+			zerg[0] = "Mutalisk";
+			Assert::IsTrue(!check_row(zerg, keys));
+		}
+
+		TEST_METHOD(InsertRowTest)
+		{
+			Relation r;
+			vector<string> vec;
+			vector<string> vec2;
+
+			vec.push_back("Zerg");
+			vec.push_back("Hydralisk");
+			vec.push_back("Mutalisk");
+
+			vec2.push_back("Marine");
+			vec2.push_back("Firebat");
+			vec2.push_back("Seige Tank");
+
+			r.insert_row(vec);
+			r.insert_row(vec2);
+
+			Assert::IsTrue(r.table[0] == vec); //if this test fails, check to see if TestIsEqualsStringVectorOperator passed
+			Assert::IsTrue(r.table[1] == vec2);
+		}
+		TEST_METHOD(DeleteRowTest)
+		{
+			Relation r;
+			vector<string> vec;
+			vector<string> vec2;
+			vector<string> keylist;
+
+			vec.push_back("Zerg");
+			vec.push_back("Hydralisk");
+			vec.push_back("Mutalisk");
+
+			vec2.push_back("Marine");
+			vec2.push_back("Firebat");
+			vec2.push_back("Seige Tank");
+
+			keylist.push_back("Marine");
+
+			r.insert_row(vec);
+			r.insert_row(vec2);
+
+			r.delete_row(keylist);
+
+			Assert::IsTrue(r.table[0] == vec); //if this test fails, check to see if TestIsEqualsStringVectorOperator passed
+			Assert::IsTrue(r.table.size() == 1);
+		}
+		TEST_METHOD(InsertColumnTest)
+		{
+			Relation r;
+			vector<string> vec;
+			vector<string> vec2;
+
+			vec.push_back("Zerg");
+			vec.push_back("Hydralisk");
+			vec.push_back("Mutalisk");
+
+			vec2.push_back("Marine");
+			vec2.push_back("Firebat");
+			vec2.push_back("Seige Tank");
+
+			r.insert_column(vec, "Zerg", "string");
+			r.insert_column(vec2, "Terran", "string");
+
+			Assert::IsTrue(r.table[0][0] == vec[0]); //if this test fails, check to see if TestIsEqualsStringVectorOperator passed
+			Assert::IsTrue(r.table[1][0] == vec[1]);
+			Assert::IsTrue(r.table[2][0] == vec[2]);
+			Assert::IsTrue(r.table[0][1] == vec2[0]);
+			Assert::IsTrue(r.table[1][1] == vec2[1]);
+			Assert::IsTrue(r.table[2][1] == vec2[2]);
+		}
+
+		TEST_METHOD(SelectColumnTest)
+		{
+			Relation r;
+			vector<string> vec;
+			vector<string> vec2;
+			vector<string> vecback;
+			vector<string> vec2back;
+			vector<string> cond;
+			vector<string> cond2;
+
+			vec.push_back("Zerg");
+			vec.push_back("Hydralisk");
+			vec.push_back("Mutalisk");
+
+			vec2.push_back("Marine");
+			vec2.push_back("Firebat");
+			vec2.push_back("Seige Tank");
+
+			r.insert_column(vec, "Zerg", "string");
+			r.insert_column(vec2, "Terran", "string");
+
+			cond.push_back("Zerg");
+			cond.push_back("string");
+
+			cond2.push_back("Terran");
+			cond2.push_back("string");
+
+			vecback = r.select_column(cond);
+			vec2back = r.select_column(cond2);
+
+			Assert::IsTrue(vecback == vec); //if this test fails, check to see if TestIsEqualsStringVectorOperator passed
+			Assert::IsTrue(vec2back == vec2);
+		}
+		TEST_METHOD(UpdateColumnTest)
+		{
+			Relation r;
+			vector<string> vec;
+			vector<string> vec2;
+			vector<string> vecback;
+			vector<string> vec2back;
+			vector<string> updatevec2;
+			vector<string> cond;
+			vector<string> cond2;
+
+			vec.push_back("Zerg");
+			vec.push_back("Hydralisk");
+			vec.push_back("Mutalisk");
+
+			vec2.push_back("Marine");
+			vec2.push_back("Firebat");
+			vec2.push_back("Seige Tank");
+
+			updatevec2.push_back("Ghost");
+			updatevec2.push_back("Spider Mine");
+			updatevec2.push_back("Medivac");
+
+			r.insert_column(vec, "Zerg", "string");
+			r.insert_column(vec2, "Terran", "string");
+
+			cond.push_back("Zerg");
+			cond.push_back("string");
+
+			cond2.push_back("Terran");
+			cond2.push_back("string");
+
+			r.update_column(updatevec2, cond2);
+
+			vecback = r.select_column(cond);
+			vec2back = r.select_column(cond2);
+
+			Assert::IsTrue(vecback == vec); //if this test fails, check to see if TestIsEqualsStringVectorOperator passed
+			Assert::IsTrue(vec2back == updatevec2);
+		}
+		TEST_METHOD(UnionCompatibleTest)
+		{
+			Relation r;
+			vector<string> col, col2, row, row2;
+
+			col.push_back("Zerg");
+			col.push_back("Hydralisk");
+			col.push_back("Mutalisk");
+
+			col2.push_back("Marine");
+			col2.push_back("Firebat");
+			col2.push_back("Seige Tank");
+
+			r.insert_row(row);
+			r.insert_row(row2);
+			r.insert_column(col, "Zerg", "string");
+			r.insert_column(col2, "Terran", "string");
+
+			Relation r2;
+			vector<string> colr2, col2r2, rowr2, row2r2;
+
+			colr2.push_back("Roach");
+			colr2.push_back("Ultralisk");
+			colr2.push_back("Drone");
+
+			col2r2.push_back("Ghost");
+			col2r2.push_back("Medic");
+			col2r2.push_back("Thor");
+
+			r2.insert_row(rowr2);
+			r2.insert_row(row2r2);
+			r2.insert_column(colr2, "Zerg", "string");
+			r2.insert_column(col2r2, "Terran", "string");
+
+			Assert::IsTrue(r.union_compatible(r2)); 
+
+			Relation r3;
+			vector<string> colr3, col2r3, rowr3, row2r3;
+
+			colr3.push_back("Zealot");
+			colr3.push_back("Stalker");
+			colr3.push_back("Carrier");
+
+			col2r3.push_back("Ghost");
+			col2r3.push_back("Medic");
+			col2r3.push_back("Thor");
+
+			r3.insert_row(rowr3);
+			r3.insert_row(row2r3);
+			r3.insert_column(colr3, "Protoss", "string");
+			r3.insert_column(col2r3, "Terran", "string");
+
+			Assert::IsTrue(!r.union_compatible(r3));
+		}
+		TEST_METHOD(RelationRenameTest)
+		{
+			Relation r;
+			vector<string> col, col2, row, row2, attr;
+
+			col.push_back("Zerg");
+			col.push_back("Hydralisk");
+			col.push_back("Mutalisk");
+
+			col2.push_back("Marine");
+			col2.push_back("Firebat");
+			col2.push_back("Seige Tank");
+
+			r.insert_row(row);
+			r.insert_row(row2);
+			r.insert_column(col, "Zerg", "string");
+			r.insert_column(col2, "Terran", "string");
+
+			Assert::IsTrue("" == r.name);
+
+			attr.push_back("Zerg");
+			attr.push_back("Terran");
+
+			Relation r2 = r.renaming("Alex is AWESOME", attr);
+
+			Assert::IsTrue("Alex is AWESOME" == r2.name);
+		}
+		TEST_METHOD(ProjectionTest)
+		{
+			Relation r;
+			vector<string> col, col2, col3, row, row2, attr;
+
+			col.push_back("Zergling");
+			col.push_back("Hydralisk");
+			col.push_back("Mutalisk");
+
+			col2.push_back("Marine");
+			col2.push_back("Firebat");
+			col2.push_back("Seige Tank");
+
+			col3.push_back("Archon");
+			col3.push_back("Dark Archon");
+			col3.push_back("Immortal");
+
+			r.insert_column(col, "Zerg", "string");
+			r.insert_column(col2, "Terran", "string");
+			r.insert_column(col3, "Protoss", "string");
+
+			attr.push_back("Zerg");
+			attr.push_back("Protoss");
+
+			Relation r2 = r.projection("Alex", attr);
+
+			Assert::IsTrue(r.table[0][0] == "Zergling");
+			Assert::IsTrue(r.table[1][0] == "Hydralisk");
+			Assert::IsTrue(r.table[2][0] == "Mutalisk");
+
+			Assert::IsTrue(r2.table[0][0] == "Zergling");
+			Assert::IsTrue(r2.table[1][0] == "Hydralisk");
+			Assert::IsTrue(r2.table[2][0] == "Mutalisk");
+			Assert::IsTrue(r2.table[0][1] == "Archon");
+			Assert::IsTrue(r2.table[1][1] == "Dark Archon");
+			Assert::IsTrue(r2.table[2][1] == "Immortal");
+		}
+		TEST_METHOD(SetUnionTest)
+		{
+
+		}
 	};
 }

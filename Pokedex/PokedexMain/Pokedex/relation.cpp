@@ -32,9 +32,14 @@ bool operator ==(vector<string> a, vector<string> b)
 		return false;
 }
 
-bool check_row(vector<string> vec, vector<string> keys)
+bool check_row(vector<string> vec, vector<string> keys) //checks if keys are in row
 {
-	bool check = false;
+	bool check = true;
+	vector<bool> checked;
+	for (int i = 0; i < keys.size(); i++)
+	{
+		checked.push_back(false);
+	}
 
 	for (int i = 0; i < keys.size(); i++)
 	{
@@ -42,14 +47,16 @@ bool check_row(vector<string> vec, vector<string> keys)
 		{
 			if (keys[i] == vec[j])
 			{
-				check = true;
-				break;
+				checked[i] = true;
+				//check = true;
+				//break;
 			}
 		}
-		if (!check)
-		{
+	}
+	for (int i = 0; i < checked.size(); i++)
+	{
+		if (!checked[i])
 			return false;
-		}
 	}
 	return true;
 }
