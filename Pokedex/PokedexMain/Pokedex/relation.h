@@ -14,25 +14,6 @@ this function.*/
 #include "condition.h"
 #include <iostream>
 #include <iomanip>
-#include <vector>
-#include <string>
-#include <tuple>
-
-using namespace std;
-
-
-struct Conjunction {
-	//0: attribute name; 1: type; 2: op ; 3: value
-	typedef vector< tuple<string, string, string, string> > Conj_Type;
-
-	Conj_Type comparisons;
-	Conjunction() {} //Default relation constructor
-
-	void insert_conj(string attr_name, string attr_type, string op, string value);
-	void* match_comparisons(void* table);
-	void delete_comparisons(void* table);
-	void update_comparisons(string value, void* table);
-};
 
 struct Relation {
 	string name;          //Name of relation
@@ -98,7 +79,7 @@ struct Relation {
 	void delete_from(Conjunction c);
 
 	//Update values in relation that satisfy the conditions
-	void update(Conjunction c, string value);
+	void update(string value, Conjunction c);
 
 	//Return new relation with renamed attributes
 	Relation renaming(string new_table_name, vector<string> attr_list);

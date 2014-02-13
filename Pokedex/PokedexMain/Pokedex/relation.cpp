@@ -3,63 +3,7 @@ declared in relation.h*/
 
 #include "relation.h"
 
-bool is_integer(const string& s) //s is an integer and Is_integer tests if it is an integer
-{
-	if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
-
-	char * p;
-	strtol(s.c_str(), &p, 10);
-
-	return (*p == 0);
-}
-
-bool operator ==(vector<string> a, vector<string> b)
-{
-	bool verdict = true;
-	if (a.size() == b.size())
-	{
-		for (int i = 0; i < a.size(); i++)
-		{
-			if (a[i] != b[i])
-				verdict = false;
-		}
-		if (verdict)
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
-
-bool check_row(vector<string> vec, vector<string> keys) //checks if keys are in row
-{
-	bool check = true;
-	vector<bool> checked;
-	for (int i = 0; i < keys.size(); i++)
-	{
-		checked.push_back(false);
-	}
-
-	for (int i = 0; i < keys.size(); i++)
-	{
-		for (int j = 0; j < vec.size(); j++)
-		{
-			if (keys[i] == vec[j])
-			{
-				checked[i] = true;
-				//check = true;
-				//break;
-			}
-		}
-	}
-	for (int i = 0; i < checked.size(); i++)
-	{
-		if (!checked[i])
-			return false;
-	}
-	return true;
-}
+/*------------------- Row Operations -------------------*/
 
 void Relation::insert_row(vector<string> value_list)
 {
@@ -77,6 +21,8 @@ void Relation::delete_row(vector<string> key_list)
 		}
 	}
 }
+
+/*----------------- Column Operations ------------------*/
 
 void Relation::insert_column(vector<string> value_list, string name, string type)
 {
@@ -131,6 +77,8 @@ void Relation::update_column(vector<string> value_list, vector<string> cond_list
 	}
 }
 
+/*----------------- Relation Operations ----------------*/
+
 bool Relation::union_compatible(Relation table)
 {
 	if ((attr_names == table.attr_names) && (attr_types == table.attr_types))
@@ -141,19 +89,13 @@ bool Relation::union_compatible(Relation table)
 
 void Relation::delete_from(Conjunction c)
 {
-	c.delete_comparisons(this);
+	c.delete_comparisons(*this);
 }
 
-void Relation::update(Conjunction c, string value)
+void Relation::update(string value, Conjunction c)
 {
-	c.update_comparisons(value, this);
+	c.update_comparisons(value, *this);
 }
-
-Relation Relation::selection(Conjunction c)
-{
-	return *((Relation*)(c.match_comparisons(this)));
-}
-
 
 Relation Relation::renaming(string new_table_name, vector<string> attr_list)
 {
@@ -183,6 +125,11 @@ Relation Relation::projection(string new_table_name, vector<string> attr_list)
 		}
 	}
 	return proj_table;
+}
+
+Relation Relation::selection(Conjunction c)
+{
+	return c.select_comparisons(*this);
 }
 
 Relation Relation::set_union(string new_table_name, Relation other_table)
@@ -509,6 +456,8 @@ Relation Relation::natural_join(string new_table_name, Relation other_table)
 	}
 }
 
+/*------------------ Print Operations ------------------*/
+
 void Relation::show()
 {
 	cout << "\n" << name << "\n";
@@ -517,7 +466,8 @@ void Relation::show()
 	{
 		cout << setw(10) << left << attr_names.at(i);
 	}
-	cout << "\n";
+	//cout << "\n";
+	cout << "\n--------------------------------------------------------" << endl;
 	//Iterate through the rows of the table
 	for (int i = 0; i < table.size(); i++)
 	{
@@ -531,6 +481,8 @@ void Relation::show()
 	cout << "========================================================" << endl;
 
 }
+
+/*------------------ Operator Overloaders ------------------*/
  
 Relation& Relation::operator=(const Relation& orig)
 {
@@ -541,4 +493,64 @@ Relation& Relation::operator=(const Relation& orig)
 	table = orig.table;
 
 	return *this;
+}
+
+bool operator ==(vector<string> a, vector<string> b)
+{
+	bool verdict = true;
+	if (a.size() == b.size())
+	{
+		for (int i = 0; i < a.size(); i++)
+		{
+			if (a[i] != b[i])
+				verdict = false;
+		}
+		if (verdict)
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+/*------------------ Helper Functions ------------------*/
+
+bool is_integer(const string& s) //s is an integer and Is_integer tests if it is an integer
+{
+	if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
+
+	char * p;
+	strtol(s.c_str(), &p, 10);
+
+	return (*p == 0);
+}
+
+bool check_row(vector<string> vec, vector<string> keys) //checks if keys are in row
+{
+	bool check = true;
+	vector<bool> checked;
+	for (int i = 0; i < keys.size(); i++)
+	{
+		checked.push_back(false);
+	}
+
+	for (int i = 0; i < keys.size(); i++)
+	{
+		for (int j = 0; j < vec.size(); j++)
+		{
+			if (keys[i] == vec[j])
+			{
+				checked[i] = true;
+				//check = true;
+				//break;
+			}
+		}
+	}
+	for (int i = 0; i < checked.size(); i++)
+	{
+		if (!checked[i])
+			return false;
+	}
+	return true;
 }

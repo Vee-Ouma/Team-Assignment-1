@@ -130,104 +130,84 @@ vector<bool> match_op(Relation* table, tuple<string, string, string, string> com
 	return test_result;
 }
 
-void Conjunction::insert_conj(string attr_name, string attr_type, string op, string value)
+void Conjunction::insert_comparison(string attr_name, string attr_type, string op, string value)
 {
 	comparisons.push_back(make_tuple(attr_name, attr_type, op, value));
 }
 
-Relation r_temp1;
+Relation Conjunction::select_comparisons(Relation r) {
 
-void* Conjunction::match_comparisons(void* v_ptr) {
-
-	
+	Relation r_temp1 = r;
 	Relation r_temp2;
-
-	Relation* table = (Relation*)v_ptr;
-
-	r_temp1 = (*table);
 
 	vector<bool> test_results;
 
-	for (int i = 0; i < comparisons.size() ; ++i)
+	
+	for (int i = 0; i < comparisons.size() ; ++i)	//Iterate through each comparison
 	{
-		for (int j = 0; j < table->attr_names.size(); j++)
+		for (int j = 0; j < r_temp1.attr_names.size(); j++)	//Iterate through all attribute names in the Relation
 		{
-			//if (get<0>(comparisons[i]) == table->attr_names[j])
-			if (get<0>(comparisons[i]) == table->attr_names[j])
+			if (get<0>(comparisons[i]) == r_temp1.attr_names[j])	//Find the correct attribute name
 			{
 				r_temp2 = r_temp1;
 				test_results = match_op(&r_temp2, comparisons[i]);
-				for (int k = r_temp2.table.size() - 1; k > -1; k--)
+				for (int k = r_temp2.table.size() - 1; k > -1; k--)		//Iterate through each row of the Relation
 				{
-					if (test_results[k] == false)
+					if (test_results[k] == false)						//Find which comparisons failed
 						r_temp1.table.erase(r_temp1.table.begin() + k);
 				}
 			}
 		}
 	}
 
-	return &r_temp1;
+	return r_temp1;
 	
 }
 
-void Conjunction::delete_comparisons(void* v_ptr)
+void Conjunction::delete_comparisons(Relation& r)
 {
-	Relation r_temp2;
-
-	Relation* table = (Relation*)v_ptr;
-
-	r_temp1 = (*table);
+	int size_of_r;
 
 	vector<bool> test_results;
 
-	for (int i = 0; i < comparisons.size(); ++i)
+	for (int i = 0; i < comparisons.size(); ++i)	//Iterate through each comparison
 	{
-		for (int j = 0; j < table->attr_names.size(); j++)
+		for (int j = 0; j < r.attr_names.size(); j++)	//Iterate through all attribute names in the Relation
 		{
-			//if (get<0>(comparisons[i]) == table->attr_names[j])
-			if (get<0>(comparisons[i]) == table->attr_names[j])
+			if (get<0>(comparisons[i]) == r.attr_names[j])	//Find the correct attribute name
 			{
-				r_temp2 = r_temp1;
-				test_results = match_op(&r_temp2, comparisons[i]);
-				for (int k = r_temp2.table.size() - 1; k > -1; k--)
+				size_of_r = r.table.size();
+				test_results = match_op(&r, comparisons[i]);
+				for (int k = size_of_r - 1; k > -1; k--)	//Iterate through each row of the Relation
 				{
-					if (test_results[k] == false)
-						r_temp1.table.erase(r_temp1.table.begin() + k);
+					if (test_results[k] == true)		//Find which comparisons are true
+						r.table.erase(r.table.begin() + k);
 				}
 			}
 		}
 	}
-
-	table = &r_temp1;
 }
 
-void Conjunction::update_comparisons(string value, void* v_ptr)
+void Conjunction::update_comparisons(string value, Relation& r)
 {
-	Relation r_temp2;
-
-	Relation* table = (Relation*)v_ptr;
-
-	r_temp1 = (*table);
+	int size_of_r;
 
 	vector<bool> test_results;
 
-	for (int i = 0; i < comparisons.size(); ++i)
+	for (int i = 0; i < comparisons.size(); ++i)	//Iterate through each comparison
 	{
-		for (int j = 0; j < table->attr_names.size(); j++)
+		for (int j = 0; j < r.attr_names.size(); j++)	//Iterate through all attribute names in the Relation
 		{
-			//if (get<0>(comparisons[i]) == table->attr_names[j])
-			if (get<0>(comparisons[i]) == table->attr_names[j])
+			if (get<0>(comparisons[i]) == r.attr_names[j])	//Find the correct attribute name
 			{
-				r_temp2 = r_temp1;
-				test_results = match_op(&r_temp2, comparisons[i]);
-				for (int k = r_temp2.table.size() - 1; k > -1; k--)
+				size_of_r = r.table.size();
+				test_results = match_op(&r, comparisons[i]);
+				for (int k = size_of_r - 1; k > -1; k--)	//Iterate through each row of the Relation
 				{
-					if (test_results[k] == true)
-						r_temp1.table[k][j] = value;
+					if (test_results[k] == true)	//Find which comparisons are true
+						r.table[k][j] = value;
 				}
 			}
 		}
 	}
-
-	table = &r_temp1;
 }
