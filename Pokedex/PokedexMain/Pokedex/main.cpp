@@ -38,11 +38,11 @@ int main ()
 
 	Relation test_table3;
 
-	//test_table3 = test_table.selection(c);
+	test_table3 = test_table.selection("Table 3", c);
 
-	//test_table3.show();
+	test_table3.show();
 
-	test_table.delete_from(c);
+	//test_table.delete_from(c);
 
 	//test_table.update("NotBob", c);
 

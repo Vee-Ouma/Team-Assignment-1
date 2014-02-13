@@ -127,9 +127,9 @@ Relation Relation::projection(string new_table_name, vector<string> attr_list)
 	return proj_table;
 }
 
-Relation Relation::selection(Conjunction c)
+Relation Relation::selection(string new_table_name, Conjunction c)
 {
-	return c.select_comparisons(*this);
+	return c.select_comparisons(new_table_name, *this);
 }
 
 Relation Relation::set_union(string new_table_name, Relation other_table)

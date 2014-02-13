@@ -11,7 +11,7 @@ this function.*/
 
 #pragma once
 
-#include "condition.h"
+#include "conjunction.h"
 #include <iostream>
 #include <iomanip>
 
@@ -89,7 +89,7 @@ struct Relation {
 
 	//Return new relation that satisfies conditions
 	//Relation selection(string new_table_name, vector<string> attr_list, vector<string> cond_list);
-	Relation selection(Conjunction c);
+	Relation selection(string new_table_name, Conjunction c);
 
 	//Return new relation which is the union of two relations
 	Relation set_union(string new_table_name, Relation other_table);
