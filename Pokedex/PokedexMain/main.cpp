@@ -47,7 +47,7 @@ int main()
 
 	Relation test_table4;
 
-	test_table4 = test_table.selection(c);
+	//test_table4 = test_table.selection("YAY", c);
 
 	test_table4.show();
 

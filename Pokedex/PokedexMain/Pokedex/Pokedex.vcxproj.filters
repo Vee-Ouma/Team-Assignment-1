@@ -27,7 +27,10 @@
     <ClCompile Include="relation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="condition.cpp">
+    <ClCompile Include="conjunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="executer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,7 +44,10 @@
     <ClInclude Include="relation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="condition.h">
+    <ClInclude Include="conjunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="executer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

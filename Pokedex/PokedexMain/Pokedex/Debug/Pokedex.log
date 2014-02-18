@@ -1,13 +1,28 @@
-﻿Build started 2/10/2014 11:37:33 PM.
+﻿Build started 2/17/2014 9:07:37 PM.
      1>Project "H:\CSCE315\Database\Team-Assignment-1\Pokedex\PokedexMain\Pokedex\Pokedex.vcxproj" on node 2 (Build target(s)).
-     1>Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"\\filer.cs.tamu.edu\kwinburn\ms_windows\cpsc_redirected\Desktop\Debug\Pokedex.lib" /NOLOGO Debug\condition.obj
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt db_engine.cpp parser.cpp
+         parser.cpp
+         Generating Code...
+         Compiling...
+         db_engine.cpp
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\db_engine.cpp(12): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\db_engine.cpp(25): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\db_engine.cpp(139): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\db_engine.cpp(156): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\db_engine.cpp(167): warning C4018: '<' : signed/unsigned mismatch
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\db_engine.cpp(170): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+     1>h:\csce315\database\team-assignment-1\pokedex\pokedexmain\pokedex\db_engine.cpp(32): warning C4715: 'DB_Engine::get_table' : not all control paths return a value
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"H:\CSCE315\Database\Team-Assignment-1\Debug\Pokedex.lib" /NOLOGO Debug\conjunction.obj
          Debug\db_engine.obj
+         Debug\executer.obj
          Debug\parser.obj
          Debug\relation.obj
-         Pokedex.vcxproj -> \\filer.cs.tamu.edu\kwinburn\ms_windows\cpsc_redirected\Desktop\Debug\Pokedex.lib
+         Pokedex.vcxproj -> H:\CSCE315\Database\Team-Assignment-1\Debug\Pokedex.lib
      1>Done Building Project "H:\CSCE315\Database\Team-Assignment-1\Pokedex\PokedexMain\Pokedex\Pokedex.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.40
+Time Elapsed 00:00:03.29

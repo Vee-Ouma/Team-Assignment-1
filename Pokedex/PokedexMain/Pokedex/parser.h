@@ -4,8 +4,14 @@ SQL command/query.*/
 
 #pragma once
 
+#pragma once
+
+
 #include "executer.h"
 #include <fstream>
+
+extern stack<string> query_stack; //Contains strings of parsed query 
+extern stack<string> cmd_stack; //Contains strings of parsed command
 
 struct Parser {
 	Executer exec; //Executer to link parser and database engine
@@ -22,6 +28,7 @@ struct Parser {
 	}
 
 	void program(string program);
+	void program_test(string program); //Used to test the function program
 };
 
 void select(string s);

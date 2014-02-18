@@ -1,15 +1,16 @@
-﻿Build started 2/10/2014 10:56:12 PM.
-     1>Project "H:\CSCE315\Database\Team-Assignment-1\Pokedex\PokedexTest\PokedexTest.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2/17/2014 9:07:41 PM.
+     1>Project "H:\CSCE315\Database\Team-Assignment-1\Pokedex\PokedexTest\PokedexTest.vcxproj" on node 3 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\UnitTest\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\PokedexTest.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /FC /errorReport:prompt unittest1.cpp
          unittest1.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\CSCE315\Pokedex\PokedexMain\Debug\PokedexTest.dll" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\UnitTest\lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\CSCE315\Pokedex\PokedexMain\Debug\PokedexTest.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\CSCE315\Pokedex\PokedexMain\Debug\PokedexTest.lib" /MACHINE:X86 /DLL Debug\stdafx.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\CSCE315\Database\Team-Assignment-1\Debug\PokedexTest.dll" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\UnitTest\lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\CSCE315\Database\Team-Assignment-1\Debug\PokedexTest.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\CSCE315\Database\Team-Assignment-1\Debug\PokedexTest.lib" /MACHINE:X86 /DLL Debug\stdafx.obj
          Debug\unittest1.obj
-         H:\CSCE315\Pokedex\PokedexMain\Debug\Pokedex.lib
-         PokedexTest.vcxproj -> H:\CSCE315\Pokedex\PokedexMain\Debug\PokedexTest.dll
+         "H:\CSCE315\Database\Team-Assignment-1\Debug\Pokedex.lib"
+            Creating library H:\CSCE315\Database\Team-Assignment-1\Debug\PokedexTest.lib and object H:\CSCE315\Database\Team-Assignment-1\Debug\PokedexTest.exp
+         PokedexTest.vcxproj -> H:\CSCE315\Database\Team-Assignment-1\Debug\PokedexTest.dll
      1>Done Building Project "H:\CSCE315\Database\Team-Assignment-1\Pokedex\PokedexTest\PokedexTest.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:05.02
+Time Elapsed 00:00:03.09

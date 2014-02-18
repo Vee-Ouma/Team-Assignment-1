@@ -3,6 +3,7 @@
 #include "relation.h"
 #include <vector>
 #include <string>
+#include "parser.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -12,11 +13,6 @@ namespace PokedexTest
 	TEST_CLASS(TestRelationFile)
 	{
 	public:
-		TEST_METHOD(IsIntegerTest)
-		{
-			Assert::IsTrue(is_integer("64"));
-			Assert::IsTrue(!is_integer("A3"));
-		}
 		
 		TEST_METHOD(TestIsEqualsStringVectorOperator)
 		{
@@ -619,5 +615,35 @@ namespace PokedexTest
 
 			r.show();
 		}
+	};
+	TEST_CLASS(TestParserFile)
+	{
+	public:
+
+		TEST_METHOD(ProgramTest)
+		{
+			string s = "cats_or_dogs <- dogs + (select (kind == \"cat\") animals";
+
+			stack<string> s_test;
+			s_test.push("cats_or_dogs");
+			s_test.push("NULL");
+			s_test.push("animals");
+			s_test.push("kind = cat");
+			s_test.push("select");
+			s_test.push("end");
+			s_test.push("+");
+			s_test.push("dogs");
+			s_test.push("end");
+
+			Parser p;
+			p.program_test(s);
+			while(!s_test.empty())
+			{	
+				Assert::IsTrue(s_test.top() == query_stack.top());
+				s_test.pop();
+				query_stack.pop();
+			}
+		}
+
 	};
 }

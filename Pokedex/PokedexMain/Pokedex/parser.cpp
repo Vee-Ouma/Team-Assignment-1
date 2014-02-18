@@ -370,6 +370,38 @@ void Parser::program(string program)
 		}
 	}
 }
+void Parser::program_test(string program)
+{
+
+	//Remove ; from end of string program
+	program.erase(program.begin() + program.length() - 1);
+
+	regex regex_cmd("^(OPEN|CLOSE|WRITE|EXIT|SHOW|CREATE(.*\\s?)TABLE|UPDATE|INSERT(.*\\s?)INTO|DELETE(.*\\s?)FROM)(.*)");
+	smatch match_cmd;
+	smatch match_query;
+	//Command
+	if (regex_search(program.cbegin(), program.cend(), match_cmd, regex_cmd))
+	{
+		string result = match_cmd[0];
+		cmd(result);
+		exec.process_cmd_stack(cmd_stack);
+		/*while (!cmd_stack.empty())
+		{
+			cmd_stack.pop();
+		}*/
+	}
+	//Query
+	if (regex_search(program.cbegin(), program.cend(), match_query, regex("^\\w+(.*\\s?)<-(.*)")))
+	{
+		string result = match_query[0];
+		query(program);
+		exec.process_query_stack(query_stack);
+		/*while (!query_stack.empty())
+		{
+			query_stack.pop();
+		}*/
+	}
+}
 
 /*------------------------------ End of Grammar Functions ---------------------------*/
 
