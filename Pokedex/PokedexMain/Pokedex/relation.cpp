@@ -87,14 +87,16 @@ bool Relation::union_compatible(Relation table)
 		return false;
 }
 
-void Relation::delete_from(Conjunction c)
+void Relation::delete_from(vector<Conjunction> c_vec)
 {
-	c.delete_comparisons(*this);
+	for (int i = 0; i < c_vec.size(); i++)
+		c_vec[i].delete_comparisons(*this);
 }
 
-void Relation::update(string value, Conjunction c)
+void Relation::update(vector<tuple <string, string>> values, vector<Conjunction> c_vec)
 {
-	c.update_comparisons(value, *this);
+	for (int i = 0; i < c_vec.size(); i++)
+		c_vec[i].update_comparisons(values, *this);
 }
 
 Relation Relation::renaming(string new_table_name, vector<string> attr_list)
@@ -111,7 +113,7 @@ Relation Relation::projection(string new_table_name, vector<string> attr_list)
 	for (int i = 0; i < attr_list.size(); i++)  //iterate through attr_list passed to the function
 	{
 		for (int j = 0; j < attr_names.size(); j++)  //iterate through the names of the attributes of the relation being projected upon
-		//can get rid of this if attr_list has same length as attr_names
+			//can get rid of this if attr_list has same length as attr_names
 		{
 			if (attr_list.at(i) == attr_names.at(j))  //if the name on the attr_list matches the name in attr_names
 			{
@@ -127,9 +129,22 @@ Relation Relation::projection(string new_table_name, vector<string> attr_list)
 	return proj_table;
 }
 
-Relation Relation::selection(string new_table_name, Conjunction c)
+Relation Relation::selection(string new_table_name, vector<Conjunction> c_vec)
 {
-	return c.select_comparisons(new_table_name, *this);
+	Relation selected_r;
+	selected_r.attr_names = (*this).attr_names;
+	selected_r.attr_types = (*this).attr_types;
+	for (int i = 0; i < c_vec.size(); i++)
+	{
+		Relation and_comparisons = c_vec[i].select_comparisons(" ", *this);
+		//and_comparisons contains the relation acquired from selecting the tuples that meet the requirments of
+		//the AND comparisons
+
+		selected_r = selected_r.set_union(" ", and_comparisons);
+		//Union the and_comparisons relation and the selected_r relation to account for the OR comparisons
+	}
+	selected_r.name = new_table_name;
+	return selected_r;
 }
 
 Relation Relation::set_union(string new_table_name, Relation other_table)
@@ -189,7 +204,7 @@ Relation Relation::set_difference(string new_table_name, Relation other_table)
 		//Create new relation to be returned at end of function;
 		Relation diff_table(new_table_name, attr_names, attr_types, key_pos);
 
-		for (int i = 0; i < table.size(); i++) 
+		for (int i = 0; i < table.size(); i++)
 		{
 			bool insert = true;
 			for (int j = 0; j < other_table.table.size(); j++)
@@ -209,6 +224,37 @@ Relation Relation::set_difference(string new_table_name, Relation other_table)
 
 		//Return new relation created from difference
 		return diff_table;
+	}
+}
+
+Relation Relation::set_intersect(Relation other_table)
+{
+	//Check if relations are union compatible
+	if ((*this).union_compatible(other_table))
+	{
+		//Create new relation to be returned at end of function;
+		Relation intersect_table(" ", attr_names, attr_types, key_pos);
+
+		for (int i = 0; i < table.size(); i++)
+		{
+			bool insert = false;
+			for (int j = 0; j < other_table.table.size(); j++)
+			{
+				if (table[i] == other_table.table[j])
+				{
+					insert = true;
+					break;
+				}
+			}
+
+			if (insert)
+			{
+				intersect_table.insert_row(table[i]);
+			}
+		}
+
+		//Return new relation created from difference
+		return intersect_table;
 	}
 }
 
@@ -483,7 +529,7 @@ void Relation::show()
 }
 
 /*------------------ Operator Overloaders ------------------*/
- 
+
 Relation& Relation::operator=(const Relation& orig)
 {
 	name = orig.name;
@@ -515,16 +561,6 @@ bool operator ==(vector<string> a, vector<string> b)
 }
 
 /*------------------ Helper Functions ------------------*/
-
-bool is_integer(const string& s) //s is an integer and Is_integer tests if it is an integer
-{
-	if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
-
-	char * p;
-	strtol(s.c_str(), &p, 10);
-
-	return (*p == 0);
-}
 
 bool check_row(vector<string> vec, vector<string> keys) //checks if keys are in row
 {

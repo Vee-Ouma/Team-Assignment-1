@@ -76,10 +76,10 @@ struct Relation {
 	bool union_compatible(Relation table);
 
 	//Delete rows from relation that do not satisfy conditions
-	void delete_from(Conjunction c);
+	void delete_from(vector<Conjunction> c_vec);
 
 	//Update values in relation that satisfy the conditions
-	void update(string value, Conjunction c);
+	void update(vector<tuple <string, string>> values, vector<Conjunction> c_vec);
 
 	//Return new relation with renamed attributes
 	Relation renaming(string new_table_name, vector<string> attr_list);
@@ -89,13 +89,16 @@ struct Relation {
 
 	//Return new relation that satisfies conditions
 	//Relation selection(string new_table_name, vector<string> attr_list, vector<string> cond_list);
-	Relation selection(string new_table_name, Conjunction c);
+	Relation selection(string new_table_name, vector<Conjunction> c_vec);
 
 	//Return new relation which is the union of two relations
 	Relation set_union(string new_table_name, Relation other_table);
 
 	//Return new relation which is the difference of two relations
-	Relation set_difference(string new_table_name, Relation other_table); 
+	Relation set_difference(string new_table_name, Relation other_table);
+
+	//Retrun new relation which is the intersection of two relations
+	Relation set_intersect(Relation other_table);
 
 	//Return new relation which is the cross product of two relations
 	Relation cross_product(string new_table_name, Relation other_table);
@@ -115,8 +118,7 @@ struct Relation {
 
 };
 
-    /*------------------ Helper Functions ------------------*/
-bool is_integer(const string& s);
+/*------------------ Helper Functions ------------------*/
 
 bool operator ==(vector<string> a, vector<string> b);
 

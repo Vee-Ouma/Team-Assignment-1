@@ -134,36 +134,6 @@ void Conjunction::insert_comparison(string attr_name, string attr_type, string o
 {
 	comparisons.push_back(make_tuple(attr_name, attr_type, op, value));
 }
-/*
-Relation Conjunction::select_comparisons(Relation r) {
-
-	Relation r_temp1 = r;
-	Relation r_temp2;
-
-	vector<bool> test_results;
-
-	
-	for (int i = 0; i < comparisons.size() ; ++i)	//Iterate through each comparison
-	{
-		for (int j = 0; j < r_temp1.attr_names.size(); j++)	//Iterate through all attribute names in the Relation
-		{
-			if (get<0>(comparisons[i]) == r_temp1.attr_names[j])	//Find the correct attribute name
-			{
-				r_temp2 = r_temp1;
-				test_results = match_op(&r_temp2, comparisons[i]);
-				for (int k = r_temp2.table.size() - 1; k > -1; k--)		//Iterate through each row of the Relation
-				{
-					if (test_results[k] == false)						//Find which comparisons failed
-						r_temp1.table.erase(r_temp1.table.begin() + k);
-				}
-			}
-		}
-	}
-
-	return r_temp1;
-	
-}
-*/
 
 Relation Conjunction::select_comparisons(string new_table_name, Relation r) {
 
@@ -188,14 +158,13 @@ Relation Conjunction::select_comparisons(string new_table_name, Relation r) {
 	r.name = new_table_name;
 
 	return r;
-
 }
 
 void Conjunction::delete_comparisons(Relation& r)
 {
-	int size_of_r;
-
-	vector<bool> test_results;
+	vector<bool> overall_results;
+	for (int i = 0; i < r.table.size(); i++)	//Initialize overall_results vector to all true
+		overall_results.push_back(true);
 
 	for (int i = 0; i < comparisons.size(); ++i)	//Iterate through each comparison
 	{
@@ -203,40 +172,78 @@ void Conjunction::delete_comparisons(Relation& r)
 		{
 			if (get<0>(comparisons[i]) == r.attr_names[j])	//Find the correct attribute name
 			{
-				size_of_r = r.table.size();
-				test_results = match_op(&r, comparisons[i]);
-				for (int k = size_of_r - 1; k > -1; k--)	//Iterate through each row of the Relation
+				vector<bool> iter_results;
+				iter_results = match_op(&r, comparisons[i]);
+				for (int k = 0; k < overall_results.size(); k++)	//AND together the overall results and the results of
+					// the current comparison iteration
 				{
-					if (test_results[k] == true)		//Find which comparisons are true
-						r.table.erase(r.table.begin() + k);
+					overall_results[k] = overall_results[k] && iter_results[k];
+				}
+
+			}
+		}
+	}
+
+	for (int i = r.table.size() - 1; i > -1; i--)	//Iterate through each row of the Relation
+	{
+		if (overall_results[i] == true)		//If the result for the tuple was true for every comparison, delete that tuple
+			r.table.erase(r.table.begin() + i);
+	}
+}
+
+void Conjunction::update_comparisons(vector<tuple <string, string>> values, Relation& r)
+{
+	vector<bool> overall_results;
+	for (int i = 0; i < r.table.size(); i++)	//Initialize overall_results vector to all true
+		overall_results.push_back(true);
+
+	for (int i = 0; i < comparisons.size(); ++i)	//Iterate through each comparison
+	{
+		for (int j = 0; j < r.attr_names.size(); j++)	//Iterate through all attribute names in the Relation
+		{
+			if (get<0>(comparisons[i]) == r.attr_names[j])	//Find the correct attribute name
+			{
+				vector<bool> iter_results;
+				iter_results = match_op(&r, comparisons[i]);
+				for (int k = 0; k < overall_results.size(); k++)	//AND together the overall results and the results of
+					// the current comparison iteration
+				{
+					overall_results[k] = overall_results[k] && iter_results[k];
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < overall_results.size(); i++)	//Iterate through each row of the Relation
+	{
+		if (overall_results[i] == true)	//Find which comparisons are true
+		{
+			for (int j = 0; j < values.size(); j++)	//Update the corresponding element for each element in values
+			{
+				for (int k = 0; k < r.attr_names.size(); k++)	//Find the correct attribute to change
+				{
+					if (get<0>(values[j]) == r.attr_names[k])
+					{
+						r.table[i][k] = get<1>(values[j]);
+					}
 				}
 			}
 		}
 	}
 }
 
-void Conjunction::update_comparisons(string value, Relation& r)
+void Conjunction::clear()
 {
+	comparisons.clear();
+}
 
-	//TODO finish update
-	int size_of_r;
-
-	vector<bool> test_results;
-
-	for (int i = 0; i < comparisons.size(); ++i)	//Iterate through each comparison
+void Conjunction::show()
+{
+	for (auto i = 0; i < comparisons.size(); i++)
 	{
-		for (int j = 0; j < r.attr_names.size(); j++)	//Iterate through all attribute names in the Relation
-		{
-			if (get<0>(comparisons[i]) == r.attr_names[j])	//Find the correct attribute name
-			{
-				size_of_r = r.table.size();
-				test_results = match_op(&r, comparisons[i]);
-				for (int k = size_of_r - 1; k > -1; k--)	//Iterate through each row of the Relation
-				{
-					if (test_results[k] == true)	//Find which comparisons are true
-						r.table[k][j] = value;
-				}
-			}
-		}
+		cout << get<0>(comparisons[i]) << " "
+			 << get<1>(comparisons[i]) << " "
+			 << get<2>(comparisons[i]) << " "
+			 << get<3>(comparisons[i]) << "\n";
 	}
 }

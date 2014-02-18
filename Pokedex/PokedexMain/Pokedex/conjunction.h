@@ -18,5 +18,7 @@ struct Conjunction{
 	void insert_comparison(string attr_name, string attr_type, string op, string value);
 	Relation select_comparisons(string new_table_name, Relation old_r);
 	void delete_comparisons(Relation& r);
-	void update_comparisons(string value, Relation& r);
+	void update_comparisons(vector<tuple <string, string>> values, Relation& r);
+	void clear();
+	void show();
 };
